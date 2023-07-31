@@ -2,13 +2,17 @@
 set -e
 
 CURRENT_COMMAND="yarn"
+RUN_DEV=false
 
-while getopts ":ny" opt_char; do
+while getopts ":nyd" opt_char; do
     case $opt_char in
     n)
         CURRENT_COMMAND="npm"
         ;;
     y) ;;
+    d)
+        RUN_DEV=true
+        ;;
     \?)
         echo "Invalid option: -$OPTARG" >&2
         exit 1
@@ -37,8 +41,14 @@ while true; do
     case $yn in
     [Yy]*)
         echo "Repacking with $CURRENT_COMMAND..."
-        (rm -rf node_modules) & spinner $!
-        $CURRENT_COMMAND install && $CURRENT_COMMAND start
+        (rm -rf node_modules) &
+        spinner $!
+        $CURRENT_COMMAND install
+        if $RUN_DEV; then
+            $CURRENT_COMMAND run dev
+        else
+            $CURRENT_COMMAND start
+        fi
         return
         ;;
     [Nn]*)
@@ -49,4 +59,3 @@ while true; do
         ;;
     esac
 done
-

@@ -24,7 +24,7 @@ repack
 
 When running the command without any flags, you will be prompted to choose whether to repack the node_modules using npm or yarn.
 
-If you prefer to specify the package manager upfront, you can use the `-n` flag for npm or the `-y` flag for yarn:
+If you prefer to specify the package manager upfront, you can use the `-n` flag for npm or the `-y` flag for yarn, the `-d` flag for `npm run dev`:
 
 ```sh
 repack -n
@@ -32,6 +32,10 @@ repack -n
 
 ```sh
 repack -y
+```
+
+```sh
+repack -d
 ```
 
 These will use npm and yarn for repackaging, respectively, without prompting for a choice.
